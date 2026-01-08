@@ -1,0 +1,12 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Exception Handling Rules for SinoPacSport Project
+
+- 所有業務邏輯層（Service）應負責捕獲例外，並將錯誤資訊統一回傳給上層。
+- API Controller 不直接處理例外，所有例外皆由全域 ExceptionFilter 或 Middleware 進行攔截與處理。
+- ExceptionFilter / Middleware 應統一格式化錯誤回應，並記錄詳細日誌。
+- 禁止在 Controller 或 Service 中直接回傳 HTTP 狀態碼，統一由 Middleware 層處理。
+- 自訂例外類別應繼承自 System.Exception，並提供必要的錯誤訊息與內部例外記錄。

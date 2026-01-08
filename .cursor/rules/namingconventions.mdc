@@ -1,0 +1,12 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# Naming Conventions for SinoPacSport Project
+
+- 所有類別、方法、屬性、變數皆採用 PascalCase 命名。
+- 介面名稱以大寫字母 I 開頭，後接介面名稱（例如：`IUserService`）。
+- 資料夾與命名空間名稱遵循 PascalCase。
+- 異常類別名稱須以 Exception 結尾（例如：`InvalidUserException`）。
+- Repository、Service、Controller 類別名稱需明確反映其職責。

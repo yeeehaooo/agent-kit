@@ -1,0 +1,260 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# Agent Skills Integration Rules
+
+## Skills Directory Location
+
+Agent skills are located in the `.agent-skills` directory, which can be found at:
+- **Default location**: Project root directory `\.agent-skills`
+- **Alternative location**: Any specified shared folder `\.agent-skills`
+
+The skills directory structure:
+```
+.agent-skills/
+├── skills/                    # Core skills folder
+│   ├── context-fundamentals/
+│   ├── context-degradation/
+│   ├── context-compression/
+│   ├── context-optimization/
+│   ├── multi-agent-patterns/
+│   ├── memory-systems/
+│   ├── tool-design/
+│   ├── evaluation/
+│   ├── advanced-evaluation/
+│   └── project-development/
+├── SKILL.md                  # Main collection skill definition
+└── README.md                 # Complete documentation
+```
+
+## Progressive Disclosure Pattern
+
+**Always use progressive disclosure when loading skills:**
+
+1. **Initial Load**: Read only the frontmatter metadata (name, description) from each `SKILL.md` file
+2. **Skill Activation**: Load full skill content only when the task matches the skill's description or trigger conditions
+3. **Reference Loading**: Load files from `references/` and `scripts/` directories only when explicitly needed
+
+This approach minimizes token usage while ensuring relevant skills are available when needed.
+
+## Skill Discovery and Activation
+
+### How to Determine Which Skills to Load
+
+1. **Read skill metadata first**: Parse the frontmatter from each `skills/*/SKILL.md` file to get:
+   - `name`: Skill identifier
+   - `description`: When to activate the skill
+
+2. **Match task to skills**: Compare the current task/request against skill descriptions
+
+3. **Load matching skills**: Read the full `SKILL.md` content for skills that match the task
+
+4. **Load related references**: If a skill references additional files, load them only when needed
+
+### Skill Activation Triggers
+
+Each skill should be activated based on its description. Here are the key triggers:
+
+**Foundational Skills:**
+- `context-fundamentals`: "understand context", "explain context windows", "design agent architecture", "debug context issues", "optimize context usage"
+- `context-degradation`: "diagnose context problems", "fix lost-in-middle", "debug agent failures", "context poisoning", "context degradation"
+- `context-compression`: "compress context", "summarize conversation", "reduce token usage", "long-running sessions", "exceed context limits"
+
+**Architectural Skills:**
+- `multi-agent-patterns`: "design multi-agent system", "implement supervisor pattern", "create swarm architecture", "coordinate multiple agents", "multi-agent patterns"
+- `memory-systems`: "implement agent memory", "build knowledge graph", "track entities", "persist state", "cross-session persistence", "temporal knowledge graphs"
+- `tool-design`: "design agent tools", "reduce tool complexity", "implement MCP tools", "tool consolidation", "architectural reduction"
+
+**Operational Skills:**
+- `context-optimization`: "optimize context", "reduce token costs", "implement KV-cache", "partition context", "context limits", "observation masking"
+- `evaluation`: "evaluate agent performance", "build test framework", "measure agent quality", "create evaluation rubrics", "LLM-as-judge"
+- `advanced-evaluation`: "implement LLM-as-judge", "compare model outputs", "mitigate evaluation bias", "direct scoring", "pairwise comparison"
+
+**Development Methodology:**
+- `project-development`: "start LLM project", "design batch pipeline", "evaluate task-model fit", "structure agent project", "pipeline architecture"
+
+## Skill Usage Guidelines
+
+### When Working with Skills
+
+1. **Always check for relevant skills** before starting a task that involves:
+   - Context management
+   - Agent architecture design
+   - Tool creation or optimization
+   - Memory/persistence implementation
+   - Evaluation framework design
+   - Project planning for LLM systems
+
+2. **Load skills proactively** when you detect:
+   - User requests matching skill triggers
+   - Tasks requiring specialized knowledge from skills
+   - Architecture or design decisions that benefit from skill guidance
+
+3. **Apply skill principles** from loaded skills to:
+   - Guide design decisions
+   - Inform implementation approaches
+   - Validate solutions against best practices
+   - Debug issues using skill-provided patterns
+
+4. **Reference skill content** when:
+   - Explaining design choices
+   - Providing implementation guidance
+   - Debugging context-related issues
+   - Optimizing agent performance
+
+### Skill File Reading Pattern
+
+When loading skills, follow this pattern:
+
+1. **Locate skills directory**: Check project root for `\.agent-skills`, or specified shared folder
+2. **Read metadata**: Parse frontmatter from `skills/*/SKILL.md` files (name and description only)
+3. **Match to task**: Compare task description against skill descriptions
+4. **Load relevant skills**: Read full `SKILL.md` content for matching skills
+5. **Load references on demand**: Only load `references/` and `scripts/` files when explicitly needed
+
+## Available Skills Reference
+
+### Foundational Skills
+
+1. **context-fundamentals** (`skills/context-fundamentals/SKILL.md`)
+   - Understanding context anatomy, attention mechanics, progressive disclosure, context budgeting
+   - Use when: Designing agent systems, debugging context issues, optimizing context usage, explaining context windows
+
+2. **context-degradation** (`skills/context-degradation/SKILL.md`)
+   - Recognizing lost-in-middle, poisoning, distraction, clash patterns
+   - Use when: Diagnosing agent failures, debugging context problems, understanding attention patterns
+
+3. **context-compression** (`skills/context-compression/SKILL.md`)
+   - Design compression strategies for long-running sessions, structured summarization
+   - Use when: Sessions exceed context limits, need to summarize conversations, implement compaction
+
+### Architectural Skills
+
+4. **multi-agent-patterns** (`skills/multi-agent-patterns/SKILL.md`)
+   - Orchestrator, peer-to-peer, hierarchical patterns, context isolation
+   - Use when: Designing multi-agent systems, coordinating agents, implementing supervisor patterns
+
+5. **memory-systems** (`skills/memory-systems/SKILL.md`)
+   - Short-term, long-term, graph-based memory architectures, temporal knowledge graphs
+   - Use when: Implementing persistence, building knowledge graphs, tracking entities
+
+6. **tool-design** (`skills/tool-design/SKILL.md`)
+   - Principles for building effective agent tools, consolidation principle, tool naming conventions
+   - Use when: Creating tools, optimizing tool interfaces, implementing MCP tools
+
+### Operational Skills
+
+7. **context-optimization** (`skills/context-optimization/SKILL.md`)
+   - Compaction, masking, caching, partitioning strategies, KV-cache optimization
+   - Use when: Optimizing context usage, reducing token costs, extending effective context capacity
+
+8. **evaluation** (`skills/evaluation/SKILL.md`)
+   - Evaluation frameworks for agent systems, multi-dimensional evaluation
+   - Use when: Testing agents, measuring performance, building quality gates
+
+9. **advanced-evaluation** (`skills/advanced-evaluation/SKILL.md`)
+   - LLM-as-judge techniques, bias mitigation, direct scoring, pairwise comparison
+   - Use when: Building evaluation pipelines, comparing outputs, creating rubrics
+
+### Development Methodology
+
+10. **project-development** (`skills/project-development/SKILL.md`)
+    - LLM project design from ideation to deployment, task-model fit analysis, pipeline architecture
+    - Use when: Starting LLM projects, designing pipelines, evaluating task-model fit
+
+## Implementation Requirements
+
+### For All Agents
+
+1. **On session start**:
+   - Locate `.agent-skills` directory (check project root first, then specified shared folders)
+   - Read skill metadata from all `skills/*/SKILL.md` files (frontmatter only)
+   - Store skill metadata for quick reference
+
+2. **On task assignment**:
+   - Match task description against skill descriptions
+   - Load full content of matching skills
+   - Apply skill principles to guide work
+
+3. **During execution**:
+   - Reference loaded skills when making design decisions
+   - Load additional references/scripts only when needed
+   - Follow skill-provided patterns and best practices
+
+4. **When explaining work**:
+   - Reference relevant skills that informed decisions
+   - Cite skill principles when applicable
+   - Link to skill files for detailed information
+
+### Skill Loading Workflow
+
+```
+1. Check for .agent-skills directory
+   ├─ Found at project root → Use it
+   ├─ Found in specified shared folder → Use it
+   └─ Not found → Inform user, continue without skills
+
+2. Read all skill metadata
+   └─ Parse frontmatter from skills/*/SKILL.md
+
+3. Match current task to skills
+   └─ Compare task description with skill descriptions
+
+4. Load matching skills
+   └─ Read full SKILL.md content for relevant skills
+
+5. Apply skill guidance
+   └─ Use skill principles to inform decisions and implementations
+```
+
+### Error Handling
+
+- If `.agent-skills` directory is not found, inform the user and continue without skills
+- If a skill file is missing or corrupted, skip that skill and continue with others
+- If skill loading fails, fall back to general knowledge but note the limitation
+- Always prioritize task completion over perfect skill loading
+
+## Skill Integration Best Practices
+
+1. **Don't load all skills at once** - Use progressive disclosure to minimize token usage
+2. **Match skills to tasks** - Only load relevant skills based on task description
+3. **Reference skills explicitly** - When applying skill principles, mention which skill informed the decision
+4. **Combine skills when appropriate** - Multiple skills can work together (e.g., context-fundamentals + context-optimization)
+5. **Keep skills updated** - Check for skill updates when starting new sessions
+6. **Respect skill structure** - Follow the patterns and guidelines provided in each skill
+7. **Load references on demand** - Only read `references/` and `scripts/` files when explicitly needed
+
+## Skill Application Examples
+
+### Example 1: Designing a Multi-Agent System
+1. Load `multi-agent-patterns` skill
+2. Load `context-fundamentals` for context isolation understanding
+3. Load `memory-systems` if persistence is needed
+4. Apply orchestrator/supervisor patterns from skills
+5. Reference skill principles when explaining architecture choices
+
+### Example 2: Optimizing Context Usage
+1. Load `context-optimization` skill
+2. Load `context-degradation` to understand failure patterns
+3. Load `context-compression` if compression is needed
+4. Apply compaction, masking, or caching strategies
+5. Reference optimization techniques from skills
+
+### Example 3: Building Evaluation Framework
+1. Load `evaluation` skill
+2. Load `advanced-evaluation` for LLM-as-judge techniques
+3. Apply multi-dimensional rubrics
+4. Implement bias mitigation strategies
+5. Reference evaluation patterns from skills
+
+## Notes
+
+- Skills are platform-agnostic and work across Claude Code, Cursor, and other agent frameworks
+- Skills follow the Agent Skills specification with `SKILL.md` as the main entry point
+- Each skill may include `scripts/` and `references/` subdirectories for additional resources
+- Skills are designed to be modular and can be used independently or in combination
+- Skills focus on context engineering principles for building production-grade AI agent systems
+- All skills are located in `.agent-skills/skills/` directory with standardized structure
